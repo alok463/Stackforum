@@ -11,7 +11,8 @@ Comment.create = (newComment, result) => {
     const query = `INSERT INTO user_comments(comment_body, post_id, user_id) VALUES(?,?,?)`;
     pool.query(query, [newComment.comment_body, newComment.post_id, newComment.user_id], (err, res)=>{
           if(err) {
-              console.log(`error`)
+              console.log(`error`, err);
+              result(responseHandler(false, err.code, err.message, null), null);
           }
     })
 }
