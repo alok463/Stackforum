@@ -31,6 +31,6 @@ pool.getConnection((error, connection)=> {
 })
 
 
-
+export default pool;
 
 
