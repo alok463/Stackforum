@@ -13,6 +13,11 @@ Comment.create = (newComment, result) => {
           if(err) {
               console.log(`error`, err);
               result(responseHandler(false, err.code, err.message, null), null);
+              return;
           }
+          // no errors then return results with data
+          result(null, responseHandler(true, 200, 'Comment Removed', null))
     })
 }
+
+//Comment retrieve
