@@ -23,8 +23,7 @@ CREATE TABLE user_answers(
 
 
 
-     
-
+    
 Create TABLE user_comments(
     id INT AUTO_INCREMENT PRIMARY KEY,
     comment_body LONGTEXT,
@@ -35,17 +34,6 @@ user_id INT NOT NULL,
  FOREIGN KEY(user_id) REFERENCES users(id));
 
 
- CREATE TABLE tags(
-id INT AUTO_INCREMENT PRIMARY KEY,
- tagname VARCHAR(255) UNIQUE,
- created_at TIMESTAMP DEFAULT NOW());
 
- CREATE TABLE post_tag(
- post_id INT NOT NULL,
-FOREIGN KEY(post_id) REFERENCES user_posts(id),
- tag_id INT NOT NULL,
-FOREIGN KEY (tag_id) REFERENCES tags(id),
- created_at TIMESTAMP DEFAULT NOW(),
-PRIMARY KEY(post_id, tag_id));
 
 
