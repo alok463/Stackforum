@@ -48,4 +48,54 @@ as post_count,COUNT(DISTINCT tagname)
                 WHERE users.id = 4 GROUP BY users.id;`
 
 
+ //Post retrieve  -Basic
+
+  select user_posts.id,
+     username, COUNT(DISTINCT user_answers.id) as answersCount,
+     COUNT(DISTINCT user_comments.id) as userComments,
+     tag_id, title, user_posts.post_body,
+     tagname, user_posts.post_created_at from user_posts
+     JOIN post_tag ON post_id = user_posts.id
+     JOIN tags ON tag_id = tags.id
+     JOIN users ON users_id = users.id
+     LEFT JOIN user_answers ON user_answers.user_post_id = user_posts.id
+     LEFT JOIN user_comments ON user_posts.id = user_comments.post_id
+     GROUP BY user_posts.id ORDER BY user_posts. post_created_at DESC;             
+
+
+//Top 
+ select user_posts.id,
+     username, COUNT(DISTINCT user_answers.id) as answersCount,
+     COUNT(DISTINCT user_comments.id) as userComments,
+     tag_id, title, user_posts.post_body,
+     tagname, user_posts.post_created_at from user_posts
+     JOIN post_tag ON post_id = user_posts.id
+     JOIN tags ON tag_id = tags.id
+     JOIN users ON users_id = users.id
+     LEFT JOIN user_answers ON user_answers.user_post_id = user_posts.id
+     LEFT JOIN user_comments ON user_posts.id = user_comments.post_id
+      GROUP BY user_posts.id ORDER BY answersCount DESC,userComments DESC;
+
+
+
+      //Retrieve a Single Post
+                   SELECT 
+                    user_posts.id, user_posts.users_id,tag_id,COUNT(DISTINCT user_answers.id) 
+                    as answer_count,COUNT(DISTINCT user_comments.id) 
+                    as comment_count,
+                    COUNT(DISTINCT tag_id) as TagCOUNT,
+                    username,title,user_posts.post_body
+                    as post_body,tagname,user_posts.post_created_at 
+                    FROM user_posts 
+                    JOIN post_tag ON user_posts.id = post_id 
+                    JOIN tags ON tag_id = tags.id 
+                    JOIN users ON user_posts.users_id = users.id 
+                    LEFT JOIN user_answers ON user_answers.user_post_id = user_posts.id 
+                    LEFT JOIN user_comments ON user_posts.id = user_comments.post_id 
+                    WHERE user_posts.id = ?
+                    ORDER BY TagCOUNT DESC
+                    
+                    ;
+
+
 

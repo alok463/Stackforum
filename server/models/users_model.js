@@ -131,7 +131,7 @@ User.retrieve = ({action ,id}, result) => {
     as comment_count  ${query_middle}
     LEFT JOIN user_answers ON user_answers.user_id = users.id 
     LEFT JOIN user_comments ON user_comments.user_id = users.id 
-    WHERE users.id = 4 GROUP BY users.id;`;
+    WHERE users.id = ? GROUP BY users.id;`;
 
     pool.query(action === 'one' ? query_head + queryTwo : query_head + queryOne,
     action === 'one' ? id : null,

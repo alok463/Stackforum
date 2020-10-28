@@ -1,6 +1,31 @@
 import responseHandler from '../helpers/helper.js';
 import User from '../models/users_model.js';
-import {validationResult} from 'express-validator'
+import {validationResult} from 'express-validator';
+
+
+
+const loadUser = (req,res) => {
+     
+    try {
+         
+    
+     User.loadUser(req.user.id, (err, data) => {
+          if(err) {
+              console.log(err);
+              return res.status(err.code).json(err);
+
+          }
+          return res.status(data.code).json(data);
+     })
+    }
+
+      catch (error) {
+        console.log(err);
+        return res
+            .status(500)
+            .json(responseHandler(false, 500, 'Server Error', null));
+     }
+}
 
 
 const auth_login = (req,res) => {
@@ -28,5 +53,6 @@ const auth_login = (req,res) => {
 };
 
 export  {
-   auth_login
+   auth_login,
+   loadUser
 };
