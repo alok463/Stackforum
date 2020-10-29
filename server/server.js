@@ -7,12 +7,12 @@
 
 import express  from 'express';
 import dotenv from 'dotenv';
-import bodyparser from 'body-parser';
 import http from 'http';
 import cors from 'cors';
 import compression from 'compression';
 import path from 'path';
 import morgan from 'morgan';
+import helmet from 'helmet'
 
 import pool from '../databaseConfig/databaseConfig.js'
 import index from '../server/routes/index_route.js'
@@ -21,6 +21,16 @@ import bodyParser from 'body-parser'
 
 const app = express();
 dotenv.config()
+
+app.use(compression());
+
+app.use(morgan('dev'));
+
+app.options('*', cors());
+app.use(cors({ origin: 'http://localhost:5000' }));
+
+// security config
+app.use(helmet());
 
 pool.query('USE stackforum');
 global.pool;
