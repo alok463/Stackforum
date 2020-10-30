@@ -15,7 +15,7 @@ import morgan from 'morgan';
 import helmet from 'helmet'
 
 import pool from '../databaseConfig/databaseConfig.js'
-import index from '../server/routes/index_route.js'
+import index from '../server/router/index.js'
 import bodyParser from 'body-parser'
 
 
@@ -32,7 +32,7 @@ app.use(cors({ origin: 'http://localhost:5000' }));
 // security config
 app.use(helmet());
 
-pool.query('USE stackforum');
+pool.query('USE QAForum');
 global.pool;
 
 app.use(bodyParser.urlencoded({extended: true}));

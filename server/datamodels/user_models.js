@@ -18,7 +18,7 @@ const User = function(user) {
 User.register = async(newUsers, result) => {
 
     const salt = await bcrypt.genSalt(10);
-    newUsers.password = await bcrypt(newUsers.password, salt);
+    newUsers.password = await bcrypt.hash(newUsers.password, salt);
     const query = `INSERT INTO users(username, password) VALUES(?,?);`;
     await pool.query(query,  [newUsers.username, newUsers.password], (err, res) =>{
         if(err) {

@@ -11,15 +11,15 @@ const router = express.Router();
 router.get('/',  checkUserAuth, loadTheUser);
 
 //login route
-router.post(
-    '/',
-    [
-        check('username', 'Please include a valid username').isLength({min:5}),
-        check(
-            'password',
-            'Password is required'
-        ).not().isEmpty()
-    ], login)
+// router.post(
+//     '/',
+//     [
+//         check('username', 'Please include a valid username').isLength({min:5}),
+//         check(
+//             'password',
+//             'Password is required'
+//         ).not().isEmpty()
+//     ], login)
 
 
 //register the user in the database
