@@ -2,7 +2,6 @@ import {validationResult} from 'express-validator';
 import Question from '../datamodels/question.js';
 import responseHandler from '../utils/responseHandler.js';
 
-
 const addQuestion = (req,res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -50,7 +49,6 @@ const DeleteQuestion = (req,res) => {
     }
 };
 
-
 const fetchSingleQuestion = (req,res) => {
      try {
          Question.fetchSingleQuestion(req.params.id, (err,data)=> {
@@ -60,7 +58,6 @@ const fetchSingleQuestion = (req,res) => {
                }
                return res.status(data.code).json(data);
          }) 
-
 
      } catch (error) {
           console.log(err);
@@ -92,11 +89,6 @@ const fetchAllQuestions = (req,res) => {
             .json(responseHandler(true, 500, 'Server Error', null));
     }
 };
-
-
-
-
-
 
 export  {
     addQuestion,

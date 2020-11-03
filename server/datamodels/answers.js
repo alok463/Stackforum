@@ -60,8 +60,6 @@ Answer.AllAnswers = (result) => {
 
 }
 
-
-
     
 Answer.getAllAnswersById = (questions_id, result) => {
     const query = `SELECT answers.id as AnswersID,
