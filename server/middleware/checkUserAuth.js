@@ -2,9 +2,7 @@ import jwt from 'jsonwebtoken';
 import responseHandler from '../utils/responseHandler.js';
 import dotenv from 'dotenv';
 
-
 dotenv.config();
-
 
 export default  (req,res,next) => {
         const token = req.header('x-auth-token');

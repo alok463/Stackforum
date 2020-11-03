@@ -4,7 +4,6 @@ import {addAnswers,getAllAnswers,getAnswersById, deleteAnswers} from '../control
 import checkUserAuth from '../middleware/checkUserAuth.js';
 import checkUserAction from  '../middleware/checkUserAction.js';
 
-
 const router = express.Router();
 
 router.get('/', getAllAnswers)
@@ -21,7 +20,5 @@ router.post(
                 .isEmpty()
         ]
     ], addAnswers);
-
-
 
 export default router;

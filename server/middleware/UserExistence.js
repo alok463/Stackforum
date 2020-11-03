@@ -1,7 +1,6 @@
 import pool from '../../databaseConfig/databaseConfig.js';
 import responseHandler from '../utils/responseHandler.js';
 
-
 export default (req,res, next) => {
        const  {username, password} = req.body;
        const query = `SELECT * from users WHERE username = ?;`;

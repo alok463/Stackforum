@@ -1,7 +1,6 @@
 import responseHandler from '../utils/responseHandler.js';
 import pool from '../../databaseConfig/databaseConfig.js';
 
-
 export default (req,res,next) => {
      let action;
 
@@ -15,12 +14,7 @@ export default (req,res,next) => {
      } else {
          action = "questions";
      }
-
-
-     
-
      const query = `SELECT user_id FROM ${action} WHERE id = ?;`;
-
 
      pool.query(query, req.params.id, (err,results)=> {
             if(err) {
@@ -29,11 +23,6 @@ export default (req,res,next) => {
             }
              const {user_id} = results[0]
              console.log(`Users ID `, results[0])
-        
-
-          
-  
-      
              if(user_id !== req.user.id){ 
                  console.log(`Error user is not authorized to delete`);
                  return res.json(responseHandler(false, 401, 'Unauthorized user cannot delete this!', null));
