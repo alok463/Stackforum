@@ -3,6 +3,30 @@ import User from '../datamodels/user_models.js';
 import responseHandler from '../utils/responseHandler.js';
 
 
+
+const fetchUsers = (req,res) => {
+    try {
+         const  {id} = req.params;
+         User.fetchAllUsers({
+             'action': id ? 'one' : 'all',
+             'id': id ? id : null
+         }, (err,data) => {
+            if (err) {
+                console.log(err);
+                return res.status(err.code).json(err);
+            }
+            return res.status(data.code).json(data);
+         })
+
+    } catch (error) {
+        console.log(err);
+        return res
+            .status(500)
+            .json(responseHandler(false, 500, 'Server Error', null));
+        
+    }
+}
+
 const loadTheUser = (req,res) => {
      try {
          User.loadTheUser(req.user.id, (err, data) => {
@@ -83,5 +107,6 @@ const register = async(req,res) => {
 export {
     loadTheUser,
     login,
-    register
+    register,
+    fetchUsers
 }

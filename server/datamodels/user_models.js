@@ -35,7 +35,7 @@ User.register = async(newUsers, result) => {
 
         //sign the payload
 
-        jwt.sign(payload, process.env.JWT_SECRET,  {expiresIn:'360000'}, (err, token) => {
+        jwt.sign(payload, process.env.JWT_SECRET,  {expiresIn:'5d'}, (err, token) => {
               if(err) { //error in signing the payload
                   console.log(`error`, err);
                   result(responseHandler(false, err.code, err.message, null), null);
@@ -73,7 +73,7 @@ User.login =  (newUsers, result) => {
                    }
               };
                      //sign the payload again and check the token for errors
-              jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '360000'}, (err, token) =>{
+              jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '3d'}, (err, token) =>{
 
                      if(err) {
                          console.log(`error`, err);
@@ -111,6 +111,51 @@ User.loadTheUser = (user_id, result) => {
 
        })
 }
+
+
+
+User.fetchAllUsers = ({action, id}, result) => {
+    action = action.toLowerCase();
+    const query_head = `SELECT users.id, username, users.created_at,
+    COUNT(DISTINCT questions.id) `;
+
+    const query_middle = `FROM users
+    LEFT JOIN questions ON questions.user_id = users.id
+    LEFT JOIN question_tag ON question_tag.question_id = questions.id
+    LEFT JOIN tags ON question_tag.tag_id = tags.id`;
+
+    const query_one = `as Questions, COUNT(DISTINCT tagname) as Tags
+    ${query_middle} GROUP BY users.id ORDER BY Questions DESC;`;
+    
+    const query_two = `as Questions, COUNT(DISTINCT tagname) as Tags,
+    COUNT(answers.id) as Answers, COUNT(DISTINCT comments.id) as Comments,
+    ${query_middle}  LEFT JOIN answers ON answers.user_id = users.id
+    LEFT JOIN comments ON comments.user_id = users.id
+    WHERE users.id = ? GROUP BY users.id;`;
+
+    pool.query(action === 'one' ? query_head + query_two : query_head + query_one,
+    action === 'one' ? id : null,
+    (err, results) => {
+        if (err || results.length === 0) {
+            console.log('error: ', err);
+            result(
+               responseHandler(false, err ? err.code : 404, err ? err.message : 'There are no users', null),
+                null
+            );
+            return;
+        }
+        result(
+            null,
+           responseHandler(true, 200, 'Success', action === 'one' ? results[0] : results)
+        );
+    
+    
+
+
+});
+}
+
+
 
 
 export default User;
