@@ -128,7 +128,7 @@ User.fetchAllUsers = ({action, id}, result) => {
     ${query_middle} GROUP BY users.id ORDER BY Questions DESC;`;
     
     const query_two = `as Questions, COUNT(DISTINCT tagname) as Tags,
-    COUNT(answers.id) as Answers, COUNT(DISTINCT comments.id) as Comments,
+    COUNT(answers.id) as Answers, COUNT(DISTINCT comments.id) as Comments
     ${query_middle}  LEFT JOIN answers ON answers.user_id = users.id
     LEFT JOIN comments ON comments.user_id = users.id
     WHERE users.id = ? GROUP BY users.id;`;

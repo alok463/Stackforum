@@ -1,6 +1,6 @@
 import express from 'express';
 import {check} from 'express-validator';
-import {addQuestion,DeleteQuestion } from '../controllers/question.js';
+import {addQuestion,DeleteQuestion,fetchAllQuestions, fetchSingleQuestion } from '../controllers/question.js';
 import checkUserAuth from '../middleware/checkUserAuth.js';
 import checkUserAction from '../middleware/checkUserAction.js';
 
@@ -17,5 +17,6 @@ router.post(
 
 router.delete('/:id', [checkUserAuth, checkUserAction],  DeleteQuestion )
 
+router.get('/', fetchAllQuestions)
 
 export default router;

@@ -3,7 +3,7 @@ import responseHandler from '../utils/responseHandler.js';
 import Comments from '../datamodels/comments.js';
 
 
-const   getAllComments = (req,res) => {
+const  getAllComments = (req,res) => {
     try {
         Comments.getAllComments(req.params.id, (err, data) => {
             if (err) {

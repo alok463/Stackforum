@@ -27,7 +27,7 @@ app.use(compression());
 app.use(morgan('dev'));
 
 app.options('*', cors());
-app.use(cors({ origin: 'http://localhost:5000' }));
+app.use(cors({ origin: 'http://localhost:5000'}));
 
 // security config
 app.use(helmet());

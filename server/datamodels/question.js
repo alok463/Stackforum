@@ -16,8 +16,7 @@ const Question = function(questions) {
 
 Question.fetchAllQuestions = ({action,tagname}, result) => {
   let query = '';
-  let main = `
-   SELECT questions.id, questions.user_id, username,
+  let main = `SELECT questions.id, questions.user_id, username,
    COUNT(DISTINCT answers.id) as Answers,
    COUNT(DISTINCT comments.id) as Comments,
    tag_id, question,tagname, questions.body, questions.created_at
@@ -26,7 +25,7 @@ Question.fetchAllQuestions = ({action,tagname}, result) => {
    INNER JOIN tags ON question_tag.tag_id = tags.id
    INNER JOIN users ON questions.user_id = users.id
    LEFT JOIN answers ON answers.questions_id = questions.id
-   LEFT JOIN comments ON questions.id = comments.question_id`
+   LEFT JOIN comments ON questions.id = comments.question_id `;
 
    if (action === 'basic') {
     query = 'GROUP BY questions.id ORDER BY questions.created_at DESC;';
@@ -41,7 +40,7 @@ Question.fetchAllQuestions = ({action,tagname}, result) => {
     );
     return;
 }
-pool.query(main + query,
+pool.query(main  + query,
    tagname ? tagname : null,
     (err, results) => {
         if (err || results.length === 0) {
